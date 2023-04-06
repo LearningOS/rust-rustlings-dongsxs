@@ -7,9 +7,11 @@
 //
 // Execute `rustlings hint lifetimes1` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
+// If a reference going out of scope
+// owner goes out of scope
+// 引用的同时给生命周期
 
-fn longest(x: &str, y: &str) -> &str {
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
     if x.len() > y.len() {
         x
     } else {

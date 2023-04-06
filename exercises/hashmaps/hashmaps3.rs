@@ -14,15 +14,41 @@
 
 // Execute `rustlings hint hashmaps3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
 
 use std::collections::HashMap;
 
 // A structure to store team name and its goal details.
-struct Team {
+struct Team { // 每一场比赛 需要更新一个球队 胜的分和负的分 负的分是对方的得分
     name: String,
     goals_scored: u8,
     goals_conceded: u8,
+}
+
+fn add_to_score_table(
+    scores: &mut HashMap<String, Team>,
+    team_1_name: String,
+    team_1_score: u8,
+    team_2_score: u8
+){
+    let team_present = scores.contains_key(&team_1_name); //查询这个队伍在不在记录之中
+    scores.insert(
+        team_1_name.clone(),
+	Team { // 第二项是个Team结构体
+	    name: team_1_name.clone(),
+	    goals_scored: team_1_score
+	        + if team_present {
+		    scores[&team_1_name].goals_scored
+		} else {
+		    0
+		},
+            goals_conceded: team_2_score
+	        + if team_present { // 继承之前的分数
+		    scores[&team_1_name].goals_conceded
+		} else {
+		    0
+		},
+        },
+    );
 }
 
 fn build_scores_table(results: String) -> HashMap<String, Team> {
@@ -40,6 +66,8 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
         // will be number of goals conceded from team_2, and similarly
         // goals scored by team_2 will be the number of goals conceded by
         // team_1.
+	add_to_score_table(&mut scores, team_1_name, team_1_score, team_2_score);
+	add_to_score_table(&mut scores, team_2_name, team_2_score, team_1_score);
     }
     scores
 }
