@@ -11,7 +11,7 @@ fn main() {
     ];
     println!("My array! Here it is: {:?}", my_arr);
 
-    #[allow(clippy::vec_resize_to_zero)]
+    #[allow(clippy::let_unit_value)]
     let my_empty_vec = vec![1, 2, 3, 4, 5].resize(0, 5);
     println!("This Vec is empty, see? {:?}", my_empty_vec);
 
